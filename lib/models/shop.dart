@@ -28,7 +28,7 @@ class Shop extends ChangeNotifier{
     Food(
       foodName: "Donuts",
       price: 12.00,
-      imagePath: "assets/images/donuts.png",
+      imagePath: "assets/images/donut.png",
       description: "Sweet and sugary donuts",
       category: "Desserts",
     ),

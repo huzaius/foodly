@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodly/models/shop.dart';
 import 'package:foodly/pages/intro_page.dart';
 import 'package:foodly/pages/shop_page.dart';
+import 'package:foodly/theme/my_colors.dart' as my_colors;
 import 'package:provider/provider.dart';
 
 void main() {
@@ -19,10 +20,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Foodly',
       theme: ThemeData(
-       
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: my_colors.tertiaryColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        useMaterial3: true,
+        textTheme: ThemeData(useMaterial3: true).textTheme.apply(
+              bodyColor: Colors.grey.shade100,
+              displayColor: Colors.grey.shade100,
+            ),
       ),
       home:IntroPage(),
       debugShowCheckedModeBanner: false,

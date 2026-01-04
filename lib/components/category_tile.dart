@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodly/models/category.dart';
-import 'package:foodly/theme/my_colors.dart' as my_colors;
 
 class CategoryTile extends StatelessWidget {
   
@@ -11,12 +10,13 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        //  color: my_colors.tertiaryColor,
+       color: Colors.red.shade400,
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: EdgeInsets.only(right: 1),
+      margin: EdgeInsets.only(right: 10),
+      
       child: Row(
                 children: [ 
                   Image.asset(category.imagePath,
@@ -27,10 +27,12 @@ class CategoryTile extends StatelessWidget {
                   SizedBox(width: 5),
                   Text(
                     category.categoryName,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
+                  
                 ],
               ),
+              
     );
   }
 }

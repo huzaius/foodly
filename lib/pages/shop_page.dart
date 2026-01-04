@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodly/components/category_tile.dart';
+import 'package:foodly/components/discount_card.dart';
+import 'package:foodly/components/item_tile.dart';
+import 'package:foodly/components/my_searchbar.dart';
 import 'package:foodly/models/shop.dart';
 import 'package:foodly/theme/my_colors.dart' as my_colors;
 import 'package:provider/provider.dart';
@@ -10,7 +13,7 @@ class ShopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryMenu = context.watch<Shop>().categoryMenu;
-    
+    final foodItems = context.watch<Shop>().foodMenu;
 
     return Scaffold(
       body: Padding(
@@ -35,91 +38,33 @@ class ShopPage extends StatelessWidget {
                 ),
 
                 //Avatar
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  width: 60,
-                  height: 60,
-                  clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    'assets/images/user.png',
-                    cacheHeight: 60,
-                    cacheWidth: 60,
-                    fit: BoxFit.cover,
-                  ),
+                CircleAvatar(
+                  foregroundImage: AssetImage('assets/images/user.png'),
+                  
+                  radius: 30,
                 ),
               ],
             ),
 
-            SizedBox(height: 25),
+            SizedBox(height: 20),
             //Header Text
             Text(
               'What are you going \n to eat today?',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: my_colors.inversePrimaryColor,
-              ),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
 
             SizedBox(height: 15),
-            //seacrch bar
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search here ...',
-                suffixIcon: Icon(Icons.search),
-                labelText: "Search",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: my_colors.tertiaryColor),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
 
-            SizedBox(height: 25),
+            //seacrch bar
+            MySearchbar(),
+
+            SizedBox(height: 20),
 
             //Discount area
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Big Discount \n 10.10',
-                      style: TextStyle(
-                        color: my_colors.inversePrimaryColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    Text(
-                      'Claim your voucher now!',
-                      style: TextStyle(
-                        color: my_colors.inversePrimaryColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-                //Discount Image
-                Image.asset(
-                  'assets/images/fast-food.png',
-                  width: 150,
-                  height: 150,
-                  cacheHeight: 150,
-                  cacheWidth: 150,
-                  fit: BoxFit.cover,
-                ),
-              ],
-            ),
+            DiscountCard(),
 
             //Categories and See more
-            SizedBox(height: 25),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -132,8 +77,7 @@ class ShopPage extends StatelessWidget {
             ),
 
             //Categories list and Icons
-            SizedBox(height: 25),
-
+            SizedBox(height: 20),
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
@@ -142,7 +86,6 @@ class ShopPage extends StatelessWidget {
               height: 50,
               width: double.infinity,
               child: ListView.builder(
-                
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemCount: categoryMenu.length,
@@ -151,7 +94,25 @@ class ShopPage extends StatelessWidget {
                 },
               ),
             ),
-            //items
+
+            //food items
+            SizedBox(height: 20),
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 250,
+              width: double.infinity,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: foodItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ItemTile(foodItem: foodItems[index]);
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -159,11 +120,20 @@ class ShopPage extends StatelessWidget {
       //bottom navbar
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: "Location",
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: "Cart",
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );
